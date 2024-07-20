@@ -1,0 +1,14 @@
+model users {
+  id         Int      @id @default(autoincrement())
+  email      String   @db.VarChar(150)
+  password   String   @db.VarChar(150)
+  role_id    Int      @default(1)
+  created_at DateTime @db.Timestamptz(6)
+  updated_at DateTime @db.Timestamptz(6)
+  deleted_at DateTime? @db.Timestamptz(6)
+  role       roles?   @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([email], map: "users_email")
+  @@index([role_id], map: "users_role_id")
+  @@index([email, role_id], map: "users_email_role_id")
+}
